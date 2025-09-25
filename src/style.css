@@ -16,15 +16,7 @@ a:hover {
   opacity: 0.5;
 }
 
-img {
-  /* 画面幅を変更した際に画像が伸縮する設定 */
-
-  /* 画像の原寸サイズ以上の大きさにはならない */
-
-  /* 原寸サイズ以上で表示したい場合は、width: 100%;にする。画像がぼやけるので注意 */
-  max-width: 100%;
-  height: auto;
-}
+img {}
 
 li {
   list-style: none;
@@ -35,6 +27,12 @@ li {
 
 /* 部品
 ------------------------------------------ */
+
+.container {
+  max-width: 1080px;
+  padding: 20px;
+  margin: 0 auto;
+}
 
 /* ヘッダー
 ------------------------------------------ */
@@ -49,12 +47,19 @@ li {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: center;
+  justify-content: space-between;
   margin: 50px 0;
 }
 
-.thumbnails-wrapper img {
-  max-width: 300px;
+.gallary__image {
+  flex: 1 1 300px;
+  min-width: 300px;
+}
+
+.thumbnail {
+  display: block;
+  width: 100%;
+  height: auto;
   object-fit: cover;
 }
 
@@ -63,10 +68,42 @@ li {
   opacity: .7;
 }
 
-.slides-wrapper{
+.slides-wrapper {
   position: relative;
+  width: 80%;
   max-width: 1000px;
   padding: 0 20px;
+}
+
+.modal-contents {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  align-items: start;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 767px) {
+  .modal-contents {
+    flex-direction: column;
+  }
+}
+
+.modal-image {
+  display: block;
+  width:60%;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 767px) {
+  .modal-image {
+    width:100%;
+  }
+}
+
+.modal-text {
+  color: #fff;
 }
 
 .slides-overlay {
@@ -156,23 +193,38 @@ li {
   left: -50px;
 }
 
+#prev::after {
+  position: absolute;
+  top: 0;
+  right: 14px;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  content: '';
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  transform: rotate(225deg);
+}
+
 #next {
   right: -50px;
 }
 
-#prev.active::after, #next.active::after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 #next::after {
-  content: '画像のURL';
-}
-
-#prev::after {
-  content: '画像のURL';
+  position: absolute;
+  top: 0;
+  right: 20px;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  content: '';
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  transform: rotate(45deg);
 }
 
 .modal-opened {
@@ -182,6 +234,8 @@ li {
 }
 
 .num-of-thumbnails {
+  margin-top: 10px;
+  font-size: 28px;
   color: #fff;
   text-align: center;
 }

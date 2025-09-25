@@ -12,32 +12,40 @@
 
         <link href="./src/style.css" rel="stylesheet">
 
-
     </head>
 
     <body>
-
         <header class="header">
-
         </header>
         <main>
             <section class="favorite">
-                <h2 class="title">
-                    favorite
-                </h2>
                 <div class="container">
+                    <h2 class="title">
+                        favorite
+                    </h2>
                     <!--写真コンテンツを配置-->
                     <div class="gallary">
                         <div class="thumbnails-wrapper">
-                            <img class="thumbnail" src="./src/images/curry/IMG_1366.jpg" alt="curry" data-gallery="gallery1">
-                            <img class="thumbnail" src="./src/images/coffee/IMG_2680.jpg" alt="coffee" data-gallery="gallery2">
-                            <img class="thumbnail" src="./src/images/homemade/IMG_3761.jpg" alt="homemade" data-gallery="gallery3">
+                            <figure class="gallary__image">
+                                <img class="thumbnail" src="./src/images/curry/IMG_1366.jpg" alt="curry" data-gallery="gallery1">
+                            </figure>
+
+                            <figure class="gallary__image">
+                                <img class="thumbnail" src="./src/images/coffee/IMG_2680.jpg" alt="coffee" data-gallery="gallery2">
+                            </figure>
+
+                            <figure class="gallary__image">
+                                <img class="thumbnail" src="./src/images/homemade/IMG_3761.jpg" alt="homemade" data-gallery="gallery3">
+                            </figure>
                         </div>
                         <div class="slides-overlay">
                             <button id="close-02" aria-label="閉じる"></button>
                             <div class="slides-wrapper">
                                 <button id="prev" class="active" aria-label="前へ"></button>
-                                <img id="modal-image" src="">
+                                <div class="modal-contents">
+                                    <img class="modal-image" id="modal-image" src="">
+                                    <p class="modal-text" id="modal-text">テキストが入ります。テキストが入ります。テキストが入ります。</p>
+                                </div>
                                 <button id="next" class="active" aria-label="次へ"></button>
                                 <p class="num-of-thumbnails"><span class="num"></span>/<span class="total-num"></span></p>
                             </div>
