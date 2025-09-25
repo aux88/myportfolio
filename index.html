@@ -1,13 +1,58 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>myportfolio</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="ja">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>myportfolio</title>
+        <meta name="description" content="ページの説明が入ります">
+
+        <!-- リセットCSS -->
+        <link rel="stylesheet" href="https://unpkg.com/ress@4.0.0/dist/ress.min.css">
+
+        <link href="./src/style.css" rel="stylesheet">
+
+
+    </head>
+
+    <body>
+
+        <header class="header">
+
+        </header>
+        <main>
+            <section class="favorite">
+                <h2 class="title">
+                    favorite
+                </h2>
+                <div class="container">
+                    <!--写真コンテンツを配置-->
+                    <div class="gallary">
+                        <div class="thumbnails-wrapper">
+                            <img class="thumbnail" src="./src/images/curry/IMG_1366.jpg" alt="curry" data-gallery="gallery1">
+                            <img class="thumbnail" src="./src/images/coffee/IMG_2680.jpg" alt="coffee" data-gallery="gallery2">
+                            <img class="thumbnail" src="./src/images/homemade/IMG_3761.jpg" alt="homemade" data-gallery="gallery3">
+                        </div>
+                        <div class="slides-overlay">
+                            <button id="close-02" aria-label="閉じる"></button>
+                            <div class="slides-wrapper">
+                                <button id="prev" class="active" aria-label="前へ"></button>
+                                <img id="modal-image" src="">
+                                <button id="next" class="active" aria-label="次へ"></button>
+                                <p class="num-of-thumbnails"><span class="num"></span>/<span class="total-num"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+
+        </footer>
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="module" src="/src/main.js"></script>
+    </body>
+
 </html>
