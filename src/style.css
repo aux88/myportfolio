@@ -78,9 +78,9 @@ li {
 .modal-contents {
   display: flex;
   flex-direction: row;
-  gap: 40px;
+  row-gap: 40px;
   align-items: start;
-  justify-content: center;
+  justify-content: space-between;
   margin: 0 auto;
 }
 
@@ -92,18 +92,23 @@ li {
 
 .modal-image {
   display: block;
-  width:60%;
+  width: 60%;
   object-fit: cover;
+}
+
+.image-caption {
+  width: 35%;
+  color: #fff;
 }
 
 @media screen and (max-width: 767px) {
   .modal-image {
-    width:100%;
+    width: 100%;
   }
-}
 
-.modal-text {
-  color: #fff;
+  .image-caption {
+    width: 100%;
+  }
 }
 
 .slides-overlay {
