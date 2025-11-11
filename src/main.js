@@ -1,11 +1,11 @@
 //現在地を示す数字の枠
-const current = document.querySelector('.num-of-thumbnails .num');
-const total = document.querySelector('.num-of-thumbnails .total-num');
+const current = document.querySelector('.num-of-photo .num');
+const total = document.querySelector('.num-of-photo .total-num');
 
 //モーダル外枠取得
 const modal = document.querySelector('.slides-overlay');
 //閉じるボタン取得
-const closeBtn = document.getElementById('close-02')
+const closeBtn = document.getElementById('modal-close')
 //前へボタン取得
 const prevBtn = document.getElementById('prev');
 //次へボタン取得
@@ -85,6 +85,26 @@ function showImage(index) {
    // ボタン活性制御
    prevBtn.disabled = (index === 0);
    nextBtn.disabled = (index === currentGallery.length - 1);
+
+   //前後ボタンの活性／非活性
+   if (currentIndex === currentGallery.length - 1) {
+      if (nextBtn.classList.contains('active')) {
+         nextBtn.classList.remove('active');
+      }
+   } else {
+      if (nextBtn.classList.contains('active') === false) {
+         nextBtn.classList.add('active');
+      }
+   }
+   if (currentIndex === 0) {
+      if (prevBtn.classList.contains('active')) {
+         prevBtn.classList.remove('active');
+      }
+   } else {
+      if (prevBtn.classList.contains('active') === false) {
+         prevBtn.classList.add('active');
+      }
+   }
 }
 
 // 前へ
