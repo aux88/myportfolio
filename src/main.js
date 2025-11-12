@@ -123,3 +123,17 @@ nextBtn.addEventListener('click', () => {
    }
 });
 
+//microCMSからデータ取得
+const { createClient } = microcms;
+
+const client = createClient({
+   serviceDomain: 'h9ph84pvw0',
+   apiKey: 'zNGZVzRQuDi9pRprX8NYm1GbPX8FwHUqz3Kv',
+})
+client.get({ endpoint: 'gallary-list' }).then((res) => {
+   res.contents.forEach((item, index) => {
+      if (thumbnails[index]) {
+         thumbnails[index].src = item.thumbnail.url;
+      }
+   });
+});
