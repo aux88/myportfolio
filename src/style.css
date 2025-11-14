@@ -51,13 +51,13 @@ li {
   margin: 50px 0;
 }
 
-.gallary__image {
+.gallery__image {
   flex: 1 1 300px;
   min-width: 300px;
 }
 
 @media screen and (max-width: 767px) {
-  .gallary__image {
+  .gallery__image {
     min-width: calc(300/767*100vw);
   }
 }

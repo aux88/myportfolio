@@ -47,14 +47,39 @@ const galleries = {
 let currentGallery = [];
 let currentIndex = 0;
 
-// サムネイルクリックイベント（ギャラリー切り替え）
+//microCMSからデータ取得
+const { createClient } = microcms;
+
+const client = createClient({
+   serviceDomain: 'h9ph84pvw0',
+   apiKey: 'zNGZVzRQuDi9pRprX8NYm1GbPX8FwHUqz3Kv',
+})
+
+// サムネイルにする画像を取得
+thumbnails.forEach(thumbnail => {
+   const query = thumbnail.dataset.gallery;
+   client.get({
+      endpoint: 'gallery',
+      queries: { filters: `galleryId[equals]${query}` }
+   }).then((res) => {
+      thumbnail.src = res.contents[0].image.url;
+   });
+});
+
+// サムネイルクリックイベント
+// ギャラリーIDが一致した画像を表示
 thumbnails.forEach(thumbnail => {
    thumbnail.addEventListener('click', () => {
-      console.log('click event');
-      const galleryKey = thumbnail.dataset.gallery;
-      currentGallery = galleries[galleryKey];
-      currentIndex = 0;
-      openModal();
+      const query = thumbnail.dataset.gallery;
+      client.get({
+         endpoint: 'gallery',
+         queries: { filters: `galleryId[equals]${query}` }
+      }).then((res) => {
+         currentGallery = res.contents;
+         console.log(currentGallery);
+         currentIndex = 0;
+         openModal();
+      });
    });
 });
 
@@ -78,8 +103,8 @@ closeBtn.addEventListener('click', () => {
 // 画像表示
 function showImage(index) {
    const item = currentGallery[index];
-   modalImg.src = item.src;
-   captionText.textContent = item.caption;  // ← 説明文をセット
+   modalImg.src = item.image.url;
+   captionText.textContent = item.comment;
    current.textContent = index + 1;
 
    // ボタン活性制御
@@ -123,17 +148,55 @@ nextBtn.addEventListener('click', () => {
    }
 });
 
-//microCMSからデータ取得
-const { createClient } = microcms;
 
-const client = createClient({
-   serviceDomain: 'h9ph84pvw0',
-   apiKey: 'zNGZVzRQuDi9pRprX8NYm1GbPX8FwHUqz3Kv',
-})
-client.get({ endpoint: 'gallary-list' }).then((res) => {
-   res.contents.forEach((item, index) => {
-      if (thumbnails[index]) {
-         thumbnails[index].src = item.thumbnail.url;
-      }
-   });
-});
+const NOTE_API_URL = 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fnote.com%2Fyossie215110%2Frss';
+const listElement = document.getElementById('note-article-list');
+
+// 記事を取得して表示する関数
+function fetchNoteArticles() {
+   // 記事リストをクリア
+   listElement.innerHTML = '';
+
+   fetch(NOTE_API_URL)
+      .then(response => {
+         if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+         }
+         return response.json();
+      })
+      .then(data => {
+         if (data.status !== 'ok' || !data.items) {
+            throw new Error('RSS2JSONで記事の取得に失敗しました。');
+         }
+
+         // 取得した記事データ（items）をループ処理
+         data.items.forEach(item => {
+            // 日付を「YYYY.MM.DD」形式に整形
+            // item.pubDate は国際標準の時刻形式 (例: "2024-01-01 00:00:00")
+            const dateObj = new Date(item.pubDate);
+            const formattedDate = `${dateObj.getFullYear()}.${String(dateObj.getMonth() + 1).padStart(2, '0')}.${String(dateObj.getDate()).padStart(2, '0')}`;
+
+            // 新しいリストアイテムを作成
+            const listItem = document.createElement('li');
+            listItem.className = 'note-article-item';
+
+            // HTMLコンテンツを作成
+            listItem.innerHTML = `
+                    <time class="article-date">${formattedDate}</time>
+                    <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="article-title">
+                        ${item.title}
+                    </a>
+                `;
+
+            // リストに追加
+            listElement.appendChild(listItem);
+         });
+      })
+      .catch(error => {
+         console.error('note記事の読み込み中にエラーが発生しました:', error);
+         listElement.innerHTML = '<li>記事の読み込みに失敗しました。</li>';
+      });
+}
+
+// ページロード時に実行
+fetchNoteArticles();
